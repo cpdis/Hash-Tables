@@ -15,13 +15,15 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
-
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
+
+
 def hash(string, max):
     pass
 
