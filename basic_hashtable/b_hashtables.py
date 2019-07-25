@@ -54,7 +54,12 @@ def hash_table_insert(hash_table, key, value):
 
 
 def hash_table_remove(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[index] != None:
+        hash_table.storage[index] = None
+    else:
+        print(f"{key} is not in hash table and cannot be removed.")
 
 
 # '''
@@ -70,9 +75,9 @@ def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
-    print(ht.storage)
 
-    # hash_table_remove(ht, "line")
+    hash_table_remove(ht, "line")
+    print(ht.storage)
 
     # if hash_table_retrieve(ht, "line") is None:
     #     print("...gone tomorrow (success!)")
