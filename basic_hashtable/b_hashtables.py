@@ -25,14 +25,18 @@ class BasicHashTable:
 
 
 def hash(string, max):
-    pass
-
+    hash = 5381  # Interesting explanation: https://stackoverflow.com/questions/10696223/reason-for-5381-number-in-djb-hash-function/13809282#13809282
+    for x in string:
+        hash = ((hash << 5) + hash) + ord(x)
+    return hash & 0xFFFFFFFF
 
 # '''
 # Fill this in.
 
 # If you are overwriting a value with a different key, print a warning.
 # '''
+
+
 def hash_table_insert(hash_table, key, value):
     pass
 
