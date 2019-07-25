@@ -25,10 +25,10 @@ class BasicHashTable:
 
 
 def hash(string, max):
-    hash = 5381  # Interesting explanation: https://stackoverflow.com/questions/10696223/reason-for-5381-number-in-djb-hash-function/13809282#13809282
+    hash = 5381
     for x in string:
         hash = ((hash << 5) + hash) + ord(x)
-    return hash & 0xFFFFFFFF
+    return hash % max
 
 # '''
 # Fill this in.
@@ -38,14 +38,21 @@ def hash(string, max):
 
 
 def hash_table_insert(hash_table, key, value):
-    pass
+    pair = Pair(key, value)
+    index = hash(key, hash_table.capacity)
 
+    if hash_table.storage[index] is not None:
+        print("Warning: overwriting " + str(hash_table.storage[index]))
+
+    hash_table.storage[index] = pair
 
 # '''
 # Fill this in.
 
 # If you try to remove a value that isn't there, print a warning.
 # '''
+
+
 def hash_table_remove(hash_table, key):
     pass
 
@@ -63,13 +70,14 @@ def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
+    print(ht.storage)
 
-    hash_table_remove(ht, "line")
+    # hash_table_remove(ht, "line")
 
-    if hash_table_retrieve(ht, "line") is None:
-        print("...gone tomorrow (success!)")
-    else:
-        print("ERROR:  STILL HERE")
+    # if hash_table_retrieve(ht, "line") is None:
+    #     print("...gone tomorrow (success!)")
+    # else:
+    #     print("ERROR:  STILL HERE")
 
 
 Testing()
