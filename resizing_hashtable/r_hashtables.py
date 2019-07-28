@@ -1,8 +1,8 @@
-
-
 # '''
 # Linked List hash table key/value pair
 # '''
+
+
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
@@ -19,7 +19,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
-        self.next = None
+        self.count = 0
 
 
 # '''
@@ -40,25 +40,32 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     index = hash(key, hash_table.capacity)
 
-    new_pair = LinkedPair(key, value)
-    current_pair = hash_table.storage[index]
+    if hash_table.storage[index] is not None:
+        current_pair = hash_table.storage[index]
 
-    while current_pair is not None and current_pair.key != key:
-        current_pair = current_pair.next
+        while current_pair is not None:
+            if current_pair.key == key:
+                current_pair.value = value
+                return None
+            current_pair = current_pair.next
 
-    if current_pair is None:
-        new_pair = LinkedPair(key, value)
-        new_pair.next = hash_table.storage[index]
-        hash_table.storage[index] = new_pair
+        # Collision
+        if current_pair is None:
+            hash_table.count += 1
+            new_pair = LinkedPair(key, value)
+            new_pair.next = hash_table.storage[index]
+            hash_table.storage[index] = new_pair
+
     else:
-        current_pair.value = value
-
+        hash_table.storage[index] = LinkedPair(key, value)
 
 # '''
 # Fill this in.
 
 # If you try to remove a value that isn't there, print a warning.
 # '''
+
+
 def hash_table_remove(hash_table, key):
     index = hash(key, hash_table.capacity)
 
