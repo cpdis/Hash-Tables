@@ -68,11 +68,33 @@ def hash_table_insert(hash_table, key, value):
 
 def hash_table_remove(hash_table, key):
     index = hash(key, hash_table.capacity)
+    current_pair = hash_table.storage[index]
+    previous_pair = hash_table.storage[index]
 
-    if hash_table.storage[index] != None:
-        hash_table.storage[index] = None
+    if current_pair is not None:
+        while current_pair is not None:
+            if current_pair.key == key:
+                if current_pair is hash_table.storage[index]:
+                    if current_pair.next is None:
+                        hash_table.storage[index] = None
+                        return None
+                    else:
+                        hash_table.storage[index] = hash_table.storage[index].next
+                        return None
+                else:
+                    if current_pair.next is not None:
+                        previous_pair.next = current_pair.next
+                        return None
+                    else:
+                        previous_pair.next = None
+                        return None
+
+            previous_pair = current_pair
+            current_pair = current_pair.next
+
     else:
-        print(f"{key} is not in hash table and cannot be removed.")
+        print(f'There is no key: {key} in the hash table.')
+        return 1
 
 
 # '''
