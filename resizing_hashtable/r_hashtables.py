@@ -104,12 +104,15 @@ def hash_table_remove(hash_table, key):
 # '''
 def hash_table_retrieve(hash_table, key):
     index = hash(key, hash_table.capacity)
+    current_pair = hash_table.storage[index]
 
-    if hash_table.storage[index] is not None:
-        if hash_table.storage[index].key == key:
-            return hash_table.storage[index].value
-
-    return None
+    if current_pair is not None:
+        while current_pair is not None:
+            if current_pair.key == key:
+                return current_pair.value
+            current_pair = current_pair.next
+    else:
+        return None
 
 
 # '''
