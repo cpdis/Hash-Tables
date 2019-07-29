@@ -25,25 +25,47 @@ class BasicHashTable:
 
 
 def hash(string, max):
-    pass
-
+    hash = 5381
+    for x in string:
+        hash = ((hash << 5) + hash) + ord(x)
+    return hash % max
 
 # '''
 # Fill this in.
 
 # If you are overwriting a value with a different key, print a warning.
 # '''
-def hash_table_insert(hash_table, key, value):
-    pass
 
+
+def hash_table_insert(hash_table, key, value):
+    index = hash(key, hash_table.capacity)
+    new_pair = Pair(key, value)
+    current_pair = hash_table.storage[index]
+    last_pair = None
+
+    while current_pair is not None and current_pair.key != key:
+        last_pair = current_pair
+        current_pair = current_pair.next
+
+    if hash_table.storage[index] is not None:
+        print("Warning: overwriting " + str(hash_table.storage[index]))
+
+    hash_table.storage[index] = pair
 
 # '''
 # Fill this in.
 
 # If you try to remove a value that isn't there, print a warning.
 # '''
+
+
 def hash_table_remove(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[index] != None:
+        hash_table.storage[index] = None
+    else:
+        print(f"{key} is not in hash table and cannot be removed.")
 
 
 # '''
@@ -52,7 +74,13 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[index] is not None:
+        if hash_table.storage[index].key == key:
+            return hash_table.storage[index].value
+
+    return None
 
 
 def Testing():
@@ -66,6 +94,8 @@ def Testing():
         print("...gone tomorrow (success!)")
     else:
         print("ERROR:  STILL HERE")
+
+    print(ht.storage)
 
 
 Testing()
