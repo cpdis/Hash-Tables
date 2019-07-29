@@ -40,6 +40,7 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     index = hash(key, hash_table.capacity)
 
+    # Is the key already in the linked list?
     if hash_table.storage[index] is not None:
         current_pair = hash_table.storage[index]
 
@@ -55,7 +56,7 @@ def hash_table_insert(hash_table, key, value):
             new_pair = LinkedPair(key, value)
             new_pair.next = hash_table.storage[index]
             hash_table.storage[index] = new_pair
-
+    
     else:
         hash_table.storage[index] = LinkedPair(key, value)
 
